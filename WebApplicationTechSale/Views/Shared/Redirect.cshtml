@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Перенаправление...";
+}
+
+@model RedirectModel
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mt-lg-3 rounded-0">
+            <div class="card-body">
+                @if (Model.InfoMessages.Count > 0)
+                {
+                    <h4 class="card-title text-center mb-3">@Model.InfoMessages[0]</h4>
+                    Model.InfoMessages.RemoveAt(0);
+                    foreach (var message in Model.InfoMessages)
+                    {
+                        <p class="card-text">@message</p>
+                    }
+                }
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p class="card-text text-center">Перенаправление через <span id="timeToRedirect">@Model.SecondsToRedirect</span> сек.</p>
+                    </li>
+                    <li class="list-group-item">
+                        <p class="card-text text-center">Если перенаправления не произошло, нажмите <a class="redirect-link" href="@Model.RedirectUrl">сюда</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    let sec = @Model.SecondsToRedirect;
+
+    function RedirectionTimer() {
+
+        document.getElementById("timeToRedirect").innerHTML = sec;
+
+        sec--;
+
+        if (sec == 0) {
+            window.location.href = "@Model.RedirectUrl";
+        }
+    }
+
+    RedirectionTimer();
+    setInterval(RedirectionTimer, 1000);
+    </script>
+}

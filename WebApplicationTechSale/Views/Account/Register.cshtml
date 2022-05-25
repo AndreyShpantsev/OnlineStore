@@ -1,0 +1,52 @@
+﻿@model WebApplicationTechSale.Models.RegisterViewModel
+
+@{ ViewBag.Title = "Регистрация"; }
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-xl-6">
+        <div class="card my-3 rounded-0">
+            <div class="card-body">
+                <h5 class="card-title text-center my-3" id="new">Создайте новую учетную&nbsp;запись</h5>
+                <form method="post" asp-action="Register" asp-controller="Account">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" id="Email" class="form-control rounded-0">
+                        <div class="form-text">Например, mail@example.com</div>
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="UserName" class="form-label"></label>
+                        <input asp-for="UserName" id="UserName" class="form-control rounded-0">
+                        <div class="form-text">Не менее 4-х символов</div>
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="TelegramId" class="form-label"></label>
+                        <input asp-for="TelegramId" id="TelegramId" class="form-control rounded-0">
+                        <div class="form-text">Имя пользователя указано в настройках Telegram</div>
+                        <span class="text-danger" asp-validation-for="TelegramId"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" id="Password" class="form-control rounded-0">
+                        <div class="form-text">Не менее 8 символов, не менее 1 цифры, хотя бы 1 буква в нижнем регистре, хотя бы 1 буква в верхнем регистре</div>
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PasswordConfirmation" class="form-label"></label>
+                        <input asp-for="PasswordConfirmation" id="PasswordConfirmation" class="form-control rounded-0">
+                        <span class="text-danger" asp-validation-for="PasswordConfirmation"></span>
+                    </div>
+                    <div class="d-grid mb-3">
+                        <button id="create" type="submit" class="btn btn-lg btn-dark rounded-0">Создать учетную запись</button>
+                    </div>
+                </form>
+                <h5 class="my-3 text-center">Уже зарегистрированы?</h5>
+                <div class="d-grid">
+                    <a class="btn btn-lg btn-secondary rounded-0" asp-action="Login" asp-controller="Account">Выполнить вход в учетную запись</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

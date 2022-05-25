@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/fonts.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white py-0">
+            <div class="container border-bottom py-2">
+                <div>
+                    <img class="navbar-brand logo" src="~/images/logo.png">
+                </div>
+                <button class="navbar-toggler rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav me-auto">
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <li class="nav-item mx-1 my-1">
+                                <a class="btn btn-lg btn-outline-light rounded-0" asp-action="UsersList" asp-controller="Admin"><div class="text-dark">Список модераторов</div></a>
+                            </li>
+                        }
+                        else if (User.Identity.IsAuthenticated && User.IsInRole("moderator"))
+                        {
+                            <li class="nav-item mx-1 my-1">
+                                <a class="btn btn-lg btn-outline-light rounded-0" asp-action="Antiques" asp-controller="Moderator"><div class="text-dark">Список антиквариата</div></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item mx-1 my-1">
+                                <a class="btn btn-lg btn-outline-light rounded-0" asp-action="Antiques" asp-controller="Home"><div class="text-dark">Главная</div></a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item ms-1 my-1">
+                                <a id="Personal" class="btn btn-lg btn-outline-light rounded-0" asp-action="Personal" asp-controller="Account"><div class="text-dark">Личный кабинет</div></a>
+                            </li>
+                            if (User.IsInRole("regular user"))
+                            {
+                                <li class="nav-item ms-1 my-1">
+                                    <a id="SavedList" class="btn btn-lg btn-outline-secondary rounded-0" asp-action="MySavedList" asp-controller="User"><div class="text-dark">Избранное</div></a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-1 my-1">
+                                <a id="Log" class="btn btn-lg btn-outline-light rounded-0" asp-action="Login" asp-controller="Account"><div class="text-dark">Вход</div></a>
+                            </li>
+                            <li class="nav-item ms-1 my-1">
+                                <a class="btn btn-lg btn-outline-light rounded-0" asp-action="Register" asp-controller="Account"><div class="text-dark">Регистрация</div></a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div id ="need" class="container">
+            &copy; 2021 - SaleAntiques. Интернет-магазин антиквариата
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

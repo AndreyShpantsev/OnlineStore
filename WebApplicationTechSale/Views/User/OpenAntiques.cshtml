@@ -1,0 +1,98 @@
+﻿@using DataAccessLogic.DatabaseModels;
+@using DataAccessLogic.HelperServices;
+
+@model Antiques
+
+@{
+    ViewData["Title"] = "Выбранный антиквариат";
+}
+
+<div class="row justify-content-center pt-3">
+    <div class="col-lg-10 col-xl-9 d-flex align-items-center">
+        <div class="h4 my-0 py-3">@Model.Name</div>
+    </div>
+    @if (User.Identity.Name != Model.User.UserName && Model.Status != AntiquesStatusProvider.GetSoldStatus())
+    {
+        if (ViewBag.IsSaved)
+        {
+            <div class="col-lg-10 col-xl-9">
+                <form method="post" asp-action="RemoveAntiques" asp-controller="User" asp-route-antiquesId="@Model.Id">
+                    <div class="d-grid my-3">
+                        <button id="Delete" type="submit" class="btn btn-lg btn-dark rounded-0">Удалить из избранного</button>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-10 col-xl-9">
+                <form method="post" asp-action="SaveAntiques" asp-controller="User" asp-route-antiquesId="@Model.Id">
+                    <div class="d-grid my-3">
+                        <button id="Add" type="submit" class="btn btn-lg btn-dark rounded-0">Добавить в избранное</button>
+                    </div>
+                </form>
+            </div>
+        }
+    }
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+        <div class="card rounded-0">
+            <img src="@Model.PhotoSrc" class="card-img-top rounded-0" alt="...">
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-6 col-xl-6">
+        <div class="row mb-4 mb-xl-0 h-100">
+            <div class="col-sm-5 d-flex align-items-center">
+                <h5>Цена: <span>@Model.Price</span> руб.</h5>
+            </div>
+        </div>
+    </div>
+    @if (Model.User.UserName != User.Identity.Name && Model.Status != AntiquesStatusProvider.GetSoldStatus())
+    {
+        <div class="col-lg-4 col-xl-3">
+            <form method="post" asp-action="CreateOrder" asp-controller="User" asp-route-antiquesId="@Model.Id">
+                <div class="d-grid">
+                    <button id="buy" type="submit" class="btn btn-lg btn-dark rounded-0">Купить</button>
+                </div>
+            </form>
+        </div>
+    }
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+        <div class="card my-3 rounded-0">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Информация об антиквариате</h4>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Продавец:</p>
+                            <p class="mb-0">@Model.User.UserName</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Название:</p>
+                            <p class="mb-0">@Model.Name</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Описание:</p>
+                            <p class="mb-0">@Model.Description</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Дата:</p>
+                            <p class="mb-0">@Model.Date.ToLongDateString()</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

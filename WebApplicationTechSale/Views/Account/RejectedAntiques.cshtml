@@ -1,0 +1,18 @@
+﻿@using DataAccessLogic.DatabaseModels
+
+@model Antiques
+
+<div class="col">
+    <div class="card h-100 rounded-0 bg-danger">
+        <div class="card-header text-center bg-danger"><h5 class="py-0 my-0">Отклонен</h5></div>
+        <img src="@Model.PhotoSrc" class="card-img-top list-lot rounded-0" alt="...">
+        <div class="card-body">
+            <a class="auction-link" asp-action="EditAntiques" asp-controller="User" asp-route-id="@Model.Id">
+                <h5 class="card-title">@Model.Name</h5>
+            </a>
+        </div>
+        <div class="card-footer border-top-0 bg-danger">
+            <a asp-action="EditAntiques" asp-controller="User" asp-route-id="@Model.Id" id="Edit" class=" my-2 btn btn-lg btn-dark rounded-0 d-block">Редактировать</a>
+        </div>
+    </div>
+</div>

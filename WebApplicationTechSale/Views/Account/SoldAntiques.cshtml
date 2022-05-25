@@ -1,0 +1,22 @@
+﻿@using DataAccessLogic.DatabaseModels
+
+@model Antiques
+
+<div class="col">
+    <div class="card h-100 rounded-0">
+        <div class="card-header text-center bg-success"><h5 class="py-0 my-0">Продан</h5></div>
+        <img src="@Model.PhotoSrc" class="card-img-top list-lot rounded-0" alt="...">
+        <div class="card-body">
+            <a class="auction-link" asp-action="OpenAntiques" asp-controller="User" asp-route-id="@Model.Id">
+                <h5 class="card-title">@Model.Name</h5>
+            </a>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Цена: </b>@Model.Price руб.</li>
+                <li class="list-group-item"><b>Дата: </b><span class="active-lot">@Model.Date</span></li>
+            </ul>
+        </div>
+        <div class="card-footer border-top-0 bg-white">
+            <a asp-action="OpenAntiques" asp-controller="User" asp-route-id="@Model.Id" class="my-2 btn btn-lg btn-dark rounded-0 d-block">Подробнее</a>
+        </div>
+    </div>
+</div>

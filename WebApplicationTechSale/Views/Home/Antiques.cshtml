@@ -1,0 +1,21 @@
+﻿@using DataAccessLogic.DatabaseModels;
+
+@model AntiquesViewModel
+
+@{
+    ViewData["Title"] = "Список антиквариата";
+}
+
+@addTagHelper *, WebApplicationTechSale
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 my-lg-2">
+    @foreach (Antiques antiques in Model.Antiques)
+    {
+        await Html.RenderPartialAsync("ActiveAntiques", antiques);        
+    }
+</div>
+
+@if (Model.Antiques.Count() > 0)
+{
+    <pagination page-model="@Model.PageViewModel" page-action="Antiques" page-controller="Home"></pagination>
+}

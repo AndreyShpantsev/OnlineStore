@@ -1,0 +1,110 @@
+﻿@using DataAccessLogic.DatabaseModels;
+@using DataAccessLogic.HelperServices;
+
+@model WebApplicationTechSale.Models.PersonalAccountViewModel
+
+@{
+    ViewData["Title"] = "Личный кабинет";
+}
+
+@addTagHelper *, WebApplicationTechSale
+
+<div class="row justify-content-center my-lg-2 pt-lg-3">
+    <div class="col-lg-5 col-xl-4 mb-2">
+        <h5 class="mb-4">Управление учетной записью:</h5>
+        @if (User.IsInRole("regular user"))
+        {
+            <p>
+                <a asp-action="Update" asp-controller="Account" id="update" class="btn btn-lg btn-dark d-block rounded-0">Изменить учетные данные</a>
+            </p>
+            <p>
+                <a id="MyOrders" asp-action="MyOrders" asp-controller="Account" class="btn btn-lg btn-dark d-block rounded-0">Мои покупки</a>
+            </p>            
+        }
+        <p>
+            <a id="ChangePassword" asp-action="ChangePassword" asp-controller="Account" class="btn btn-lg btn-dark d-block rounded-0">Изменить пароль</a>
+        </p>
+        <form method="post" asp-action="Logout" asp-controller="Account">
+            <div class="d-grid">
+                <button type="submit" id="Quit" class="btn btn-lg btn-danger rounded-0">Выйти из учетной записи</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-7 col-xl-8 mb-2">
+        <h5 class="mb-4 mt-4 mt-lg-0">Данные учетной записи:</h5>
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-5 d-flex align-items-center">
+                <h6>Имя пользователя</h6>
+            </div>
+            <div class="col-md-8 col-lg-7">
+                <input class="form-control form-control-lg rounded-0" type="text" placeholder="@Model.UserName" disabled>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-5 col-lg-6 col-xl-5 d-flex align-items-center">
+                <h6>Адрес электронной почты</h6>
+            </div>
+            <div class="col-md-7 col-lg-6 col-xl-7">
+                <input class="form-control form-control-lg rounded-0" type="text" placeholder="@Model.Email" disabled>
+            </div>
+        </div>
+        @if (User.IsInRole("regular user"))
+        {
+            <div class="row mt-3">
+                <div class="col-md-5 col-lg-6 col-xl-5 d-flex align-items-center">
+                    <h6>Идентификатор в Telegram</h6>
+                </div>
+                <div class="col-md-7 col-lg-6 col-xl-7">
+                    <input class="form-control form-control-lg rounded-0" type="text" placeholder="@Model.TelegramId" disabled>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (Model.PersonalAntiquesList.Antiques.Count() > 0)
+{
+    <div class="row justify-content-center my-2">
+        <div class="col">
+            <h5>Список антиквариата:</h5>
+        </div>
+    </div>
+    <div class="row justify-content-center my-2">
+        <div class="col-md-6 col-lg-4">
+            <p>
+                <a asp-action="CreateAntiques" asp-controller="User" id="addAntiques" class="btn btn-lg btn-dark d-block rounded-0">+ Новый антиквариат</a>
+            </p>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (Antiques antiques in Model.PersonalAntiquesList.Antiques)
+        {
+            if (antiques.Status == AntiquesStatusProvider.GetAcceptedStatus())
+            {
+                await Html.RenderPartialAsync("AcceptedAntiques", antiques);
+            }
+            if (antiques.Status == AntiquesStatusProvider.GetOnModerationStatus())
+            {
+                await Html.RenderPartialAsync("AntiquesOnModeration", antiques);
+            }
+            if (antiques.Status == AntiquesStatusProvider.GetRejectedStatus())
+            {
+                await Html.RenderPartialAsync("RejectedAntiques", antiques);
+            }
+            if (antiques.Status == AntiquesStatusProvider.GetSoldStatus())
+            {
+                await Html.RenderPartialAsync("SoldAntiques", antiques);
+            }
+        }
+    </div>
+    <pagination page-model="@Model.PersonalAntiquesList.PageViewModel" page-action="Personal" page-controller="Account"></pagination>
+}
+else if (User.IsInRole("regular user"))
+{
+    <div class="row justify-content-center my-2">
+        <div class="col-md-6 col-lg-4">
+            <p>
+                <a asp-action="CreateAntiques" asp-controller="User" id="addAntiques" class="btn btn-lg btn-dark d-block rounded-0">Создайте свой первый антиквариат</a>
+            </p>
+        </div>
+    </div>
+}

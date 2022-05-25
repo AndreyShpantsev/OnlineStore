@@ -1,0 +1,87 @@
+﻿@model AntiquesModerationModel
+
+@{
+    ViewData["Title"] = "Выбранный антиквариат";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mt-lg-3 rounded-0">
+            <div class="card-body">
+                <p class="card-title text-center h4 mb-4">Внимательно проверьте все данные!</p>
+                <p class="card-text">Если все поля заполнены корректно и&nbsp;соответствуют правилам размещения антиквариата, нажмите кнопку &laquo;Опубликовать&raquo;</p>
+                <p class="card-text">Если хотя&nbsp;бы одно из&nbsp;полей не&nbsp;соответствует правилам размещения антиквариата, нажмите кнопку &laquo;Отклонить&raquo;</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Название:</p>
+                            <p class="mb-0">@Model.Antiques.Name</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Описание антиквариата:</p>
+                            <p class="mb-0">@Model.Antiques.Description</p>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <p class="h5">Фотография товара:</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <img src="@Model.Antiques.PhotoSrc" class="card-img-bottom rounded-0" alt="...">
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center my-2">
+    <div class="col-md-8 mb-2">
+        <form method="post" asp-action="AcceptAntiques" asp-controller="Moderator" asp-route-id="@Model.Antiques.Id">
+            <div class="d-grid">
+                <button id="accepted" type="submit" class="btn btn-lg btn-secondary rounded-0">Опубликовать</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8 mb-2">
+        <a class="btn btn-lg btn-dark d-block rounded-0" id="reject" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="@Model.Expanded.ToString().ToLower()" aria-controls="collapseExample">Отклонить</a>
+        @if (Model.Expanded)
+        {
+            <div class="collapse my-3 show" id="collapseExample">
+                <form method="post" asp-action="RejectAntiques" asp-controller="Moderator">
+                    <div class="mb-3" asp-validation-summary="All"></div>
+                    <div class="mb-3">
+                        <input name="model.Antiques.Id" value="@Model.Antiques.Id" hidden />
+                        <input name="model.Antiques.Name" value="@Model.Antiques.Name" hidden />
+                        <input name="model.Antiques.Description" value="@Model.Antiques.Description" hidden />
+                        <input name="model.Antiques.PhotoSrc" value="@Model.Antiques.PhotoSrc" hidden />
+                        <label for="#note" class="form-label h5">Укажите причину:</label>
+                        <textarea name="model.RejectNote" id="note" class="form-control rounded-0" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-lg btn-danger rounded-0">Подтвердить</button>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="collapse my-3" id="collapseExample">
+                <form method="post" asp-action="RejectAntiques" asp-controller="Moderator">
+                    <div class="mb-3" asp-validation-summary="All"></div>
+                    <div class="mb-3">
+                        <input name="model.Antiques.Id" value="@Model.Antiques.Id" hidden />
+                        <input name="model.Antiques.Name" value="@Model.Antiques.Name" hidden />
+                        <input name="model.Antiques.Description" value="@Model.Antiques.Description" hidden />
+                        <input name="model.Antiques.PhotoSrc" value="@Model.Antiques.PhotoSrc" hidden />
+                        <label for="#note" class="form-label h5">Укажите причину:</label>
+                        <textarea name="model.RejectNote" id="note" class="form-control rounded-0" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-lg btn-danger rounded-0">Подтвердить</button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

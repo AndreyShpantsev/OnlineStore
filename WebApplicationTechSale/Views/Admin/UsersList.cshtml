@@ -1,0 +1,39 @@
+﻿@using DataAccessLogic.DatabaseModels;
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Список модераторов";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+        <div class="my-lg-3 row justify-content-center">
+            <div class="col-lg-6 d-flex align-items-center">
+                <h5 class="py-0 text-center">Список модераторов</h5>
+            </div>
+            <div class="mb-3 my-lg-0 col-lg-6">
+                <a class="btn btn-dark btn-lg d-block rounded-0" asp-controller="Admin" asp-action="CreateUser">Добавить модератора</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-10 col-xl-9">
+        <div class="table-responsive">
+            <table class="table table-bordered border-light text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Имя пользователя</th>
+                        <th scope="col">Электронная почта</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (User user in Model)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model UpdateAccountViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card my-3 rounded-0">
+            <div class="card-body">
+                <h5 class="card-title text-center my-3">Внесите изменения</h5>
+                <form method="post" asp-action="Update" asp-controller="Account">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <label asp-for="NewEmail" class="form-label"></label>
+                        <input asp-for="NewEmail" id="NewEmail" class="form-control rounded-0">
+                        <span class="text-danger" asp-validation-for="NewEmail"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewTelegramUserName" class="form-label"></label>
+                        <input asp-for="NewTelegramUserName" id="NewTelegramUserName" class="form-control rounded-0">
+                    </div>
+                    <div class="d-grid mb-3">
+                        <button type="submit" id="save" class="btn btn-lg btn-dark rounded-0">Сохранить изменения</button>
+                    </div>
+                    <div class="my-2">
+                        <a asp-action="Personal" asp-controller="Account" class="btn btn-lg btn-secondary d-block rounded-0">Вернуться в личный кабинет</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@using DataAccessLogic.DatabaseModels
+
+@model List<Order>
+
+@{
+    ViewData["Title"] = "Список покупок";
+}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 my-lg-2">
+    @foreach (Order order in Model)
+    {
+        <div class="col">
+            <div class="card h-100 rounded-0">
+                <a><img src="@order.Antiques.PhotoSrc" class="card-img-top list-lot rounded-0" alt="..."></a>
+                <div class="card-body">
+                    <a class="auction-link" asp-action="OpenAntiques" asp-controller="User" asp-route-id="@order.Antiques.Id">
+                        <h5 class="card-title">@order.Antiques.Name</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,38 @@
+﻿@model WebApplicationTechSale.Models.LoginViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-xl-6">
+        <div class="card my-3 rounded-0">
+            <div class="card-body">
+                <h5 class="card-title text-center my-3">Выполните вход в&nbsp;учетную&nbsp;запись</h5>
+                <form method="post" asp-action="Login" asp-controller="Account">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="mb-3">
+                        <label asp-for="Login" class="form-label"></label>
+                        <input id="Login" asp-for="Login" class="form-control rounded-0">
+                        <span class="text-danger" asp-validation-for="Login"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input id="Password" asp-for="Password" class="form-control rounded-0">
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="form-check mb-3">
+                        <label asp-for="RememberMe" class="form-check-label"></label>
+                        <input asp-for="RememberMe" class="form-check-input rounded-0">
+                    </div>
+                    <div>
+                        <input asp-for="ReturnUrl" value="@Model.ReturnUrl" hidden/>
+                    </div>
+                    <div class="d-grid mb-3">
+                        <button id="Go" type="submit" class="btn btn-lg btn-dark rounded-0">Войти в учетную запись</button>
+                    </div>
+                </form>
+                <h5 class="my-3 text-center">Еще не зарегистрированы?</h5>
+                <div class="d-grid">
+                    <a class="btn btn-lg btn-secondary rounded-0" asp-action="Register" asp-controller="Account">Создать учетную запись</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
